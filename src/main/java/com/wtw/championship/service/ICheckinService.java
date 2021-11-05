@@ -9,4 +9,5 @@ import java.util.List;
 public interface ICheckinService {
     List<Checkin> getCheckinListByDate(String date) throws ParseException;
     List<Checkin> getCheckinList();
+    Checkin addUserCheckin(Long userId, Checkin checkin);
 }

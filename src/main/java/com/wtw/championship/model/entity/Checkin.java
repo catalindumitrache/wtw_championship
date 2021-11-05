@@ -1,5 +1,6 @@
 package com.wtw.championship.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,12 +17,8 @@ public class Checkin {
     @Column
     private Long checkin_id;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id", nullable = false)
-//    private User user;
-
-    @Column
-    private Long user_id;
+    @ManyToOne
+    private User user;
 
     @Column
     private Date date;

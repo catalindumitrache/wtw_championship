@@ -38,6 +38,10 @@ public class User implements Serializable {
     private Date last_modification;
 
     @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Checkin> userCheckins;
+
+    @JsonIgnore
     @ManyToMany
     @JoinTable (
             name="user_roles",

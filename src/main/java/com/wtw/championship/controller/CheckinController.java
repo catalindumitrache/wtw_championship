@@ -1,6 +1,7 @@
 package com.wtw.championship.controller;
 
 import com.wtw.championship.model.entity.Checkin;
+import com.wtw.championship.model.entity.Role;
 import com.wtw.championship.model.entity.User;
 import com.wtw.championship.service.ICheckinService;
 import com.wtw.championship.service.IUserService;
@@ -34,6 +35,13 @@ public class CheckinController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @PostMapping
+    public Checkin addUserCheckin(
+            @RequestParam(value="userId", required=true) Long userId,
+            @RequestBody Checkin checkin) throws Exception {
+        return checkinService.addUserCheckin(userId, checkin);
     }
 
 }

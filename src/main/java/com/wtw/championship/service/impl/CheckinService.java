@@ -5,7 +5,6 @@ import com.wtw.championship.model.entity.User;
 import com.wtw.championship.model.repository.ICheckinRepository;
 import com.wtw.championship.model.repository.IUserRepository;
 import com.wtw.championship.service.ICheckinService;
-import com.wtw.championship.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,15 +12,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CheckinService implements ICheckinService {
 
     private ICheckinRepository checkinRepository;
+    private IUserRepository userRepository;
 
     @Autowired
-    public CheckinService(ICheckinRepository checkinRepository) {
+    public CheckinService(ICheckinRepository checkinRepository,
+            IUserRepository userRepository) {
         this.checkinRepository = checkinRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Checkin> getCheckinListByDate(String date) throws ParseException {
@@ -31,6 +34,16 @@ public class CheckinService implements ICheckinService {
     }
     public List<Checkin> getCheckinList() {
         return checkinRepository.findAll();
+    }
+
+    @Override
+    public Checkin addUserCheckin(Long userId, Checkin checkin) {
+        Optional<User> user = userRepository.findById(userId);
+        if(user.isPresent()){
+            checkin.setUser(user.get());
+            return checkinRepository.save(checkin);
+        }
+        return null;
     }
 
 }
